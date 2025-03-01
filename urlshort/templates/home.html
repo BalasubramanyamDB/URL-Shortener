@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'base.html'%}
+    {% block main %}
+    <h1>URL SHORTNER BY </h1>
+    {% for msg in get_flashed_messages() %}
+    <h2>{{msg}}</h2>
+    {% endfor %}
+    <form action="your-url", method="post">
+        <label for="url">Website URL</label>
+        <input type="url" name="url" value="" required>
+        <br>
+        <label for="code">Short URLs</label>
+        <input type="text" name="code" value="" required>  
+        <br>
+        <input type="submit" value="Shorten">
+    </form>
+    <br>
+    <form action="your-url", method="post" enctype="multipart/form-data">
+        <label for="file">File</label>
+        <input type="file" name="file" value="" required>
+        <br>
+        <label for="code">Short name</label>
+        <input type="text" name="code" value="" required>  
+        <br>
+        <input type="submit" value="Shorten">
+    </form>
+
+    {% if codes %}
+    <h2>Codes created</h2>
+    <ul>
+        {% for c in codes %}
+        <a href="{{url_for('urlshort.redirect_to_url', code= c)}}">
+            <li> {{c}}</li>
+        </a>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endblock%}
+</body>
+</html>
